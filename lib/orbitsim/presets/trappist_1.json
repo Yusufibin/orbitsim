@@ -1,0 +1,18 @@
+[
+  {
+    "mass": 8.9e29,
+    "position": [0, 0, 0],
+    "velocity": [0, 0, 0],
+    "color": "red",
+    "radius": 8,
+    "name": "Trappist-1"
+  },
+  {
+    "mass": 1.34e24,
+    "position": [1.8e9, 0, 0],
+    "velocity": [0, 1.5e4, 0],
+    "color": "green",
+    "radius": 3,
+    "name": "Trappist-1b"
+  }
+]

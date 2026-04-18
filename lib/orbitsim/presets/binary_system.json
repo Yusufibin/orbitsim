@@ -1,0 +1,18 @@
+[
+  {
+    "mass": 1.989e30,
+    "position": [-149600000000, 0, 0],
+    "velocity": [0, 21066, 0],
+    "color": "yellow",
+    "radius": 10,
+    "name": "Star1"
+  },
+  {
+    "mass": 1.989e30,
+    "position": [149600000000, 0, 0],
+    "velocity": [0, -21066, 0],
+    "color": "orange",
+    "radius": 10,
+    "name": "Star2"
+  }
+]

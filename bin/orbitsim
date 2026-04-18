@@ -1,0 +1,76 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift(File.expand_path('../lib', __dir__))
+
+require 'thor'
+require 'orbitsim'
+
+class OrbitSimCLI < Thor
+  desc "simulate [PRESET]", "Run orbital simulation with given preset or loaded file"
+  option :mode, type: :string, default: "terminal", enum: %w[terminal graphic]
+  option :speed, type: :numeric, default: 1
+  option :export, type: :string, enum: %w[png gif]
+  option :frames, type: :numeric, default: 100
+  option :save, type: :string
+  option :load, type: :string
+  def simulate(preset = nil)
+    if options[:load]
+      simulation = OrbitSim::Simulation.from_json(options[:load])
+    elsif preset
+      preset_data = OrbitSim::Presets.load(preset)
+      simulation = OrbitSim::Simulation.new(preset_data)
+    else
+      raise "Either PRESET or --load must be provided"
+    end
+    renderer = case options[:mode]
+                when "terminal"
+                  OrbitSim::Renderer::Terminal.new(simulation)
+                when "graphic"
+                  OrbitSim::Renderer::Graphic.new(simulation)
+                end
+    if options[:export] == "png" && options[:mode] == "graphic"
+      # For png, run a few steps and export
+      10.times { simulation.step }
+      renderer.render
+      renderer.export_png("#{preset || 'simulation'}.png")
+    elsif options[:export] == "gif" && options[:mode] == "graphic"
+      # For gif, run and collect frames
+      options[:frames].times do
+        simulation.step
+        renderer.render
+        renderer.collect_frame
+      end
+      renderer.export_gif("#{preset || 'simulation'}.gif")
+    elsif options[:export] == "gif" && options[:mode] == "terminal"
+      # For terminal gif, run and collect frames
+      options[:frames].times do
+        simulation.step
+        renderer.render
+        renderer.collect_frame
+      end
+      renderer.export_gif("#{preset || 'simulation'}.gif")
+    elsif options[:mode] == "terminal"
+      renderer.run
+    elsif options[:mode] == "graphic"
+      renderer.speed = options[:speed]
+      renderer.run
+    else
+      simulation.run(renderer, speed: options[:speed])
+    end
+    if options[:save]
+      simulation.to_json(options[:save])
+    end
+  end
+
+  desc "list", "List available presets"
+  def list
+    puts OrbitSim::Presets.list.join("\n")
+  end
+
+  desc "version", "Show version"
+  def version
+    puts OrbitSim::VERSION
+  end
+end
+
+OrbitSimCLI.start(ARGV)
