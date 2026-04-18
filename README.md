@@ -1,4 +1,4 @@
-# HelioSim
+# Orbitsim
 
 **The most beautiful and educational orbit simulator ever made in Ruby.**
 
