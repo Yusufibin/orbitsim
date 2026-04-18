@@ -8,6 +8,9 @@
 .rspec_status
 coverage/
 
+# Binaries
+bin/
+
 # OS generated files
 .DS_Store
 Thumbs.db
