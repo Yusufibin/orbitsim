@@ -7,7 +7,7 @@
 
 A realistic physical simulator of orbital movements (N-Body) written in pure Ruby. Run it in your terminal or with a graphical interface.
 
-![HelioSim Demo](visuals/demo.gif)
+
 
 ## Installation
 
