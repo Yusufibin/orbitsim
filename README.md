@@ -123,7 +123,7 @@ simulation = OrbitSim::Simulation.from_json('my_simulation.json')
 ## Project Structure
 
 ```
-helio-sim/
+orbitsim/
 ├── bin/
 │   └── orbitsim              # CLI executable
 ├── lib/
@@ -150,8 +150,8 @@ helio-sim/
 
 ```bash
 # Clone the repository
-git clone https://github.com/yusufibin/helio-sim.git
-cd helio-sim
+git clone https://github.com/yusufibin/orbitsim.git
+cd orbitsim
 
 # Install dependencies
 bundle install
